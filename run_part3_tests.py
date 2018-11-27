@@ -27,11 +27,19 @@ class PerfServer(StorageServer):
 
     def get(self, k):
         res = super().get(k)
+        # print("getting " + k)
+        # print("size " + str(len(bytes(k,'utf-8')) + len(bytes(res,'utf-8')) if res else 1))
+
         self.size += len(bytes(k,'utf-8'))
         self.size += len(bytes(res,'utf-8')) if res else 1
         return res
 
     def put(self, k, v):
+        # print("putting " + v + " at " + k)
+        # si = 0
+        # si = len(bytes(k,'utf-8')) + len(bytes(v,'utf-8'))
+        # print("size " + str(si))
+
         if not isinstance(k, str):
             raise TypeError("id must be a string")
         if not isinstance(v, str):
@@ -144,7 +152,9 @@ def z01_SimplePerformanceTest(C, pks, crypto, server=PerfServer, size=1024*1024,
     offset = random.randint(0,len(data)-1)
     data = data[:offset] + chr(ord(data[offset])+1) + data[offset+1:]
     server.size = 0
+    # print("========== starting")
     alice.upload("a", data)
+    # print("========== ending")
     res = server.size
 
     if alice.download("a") != data:
@@ -165,8 +175,8 @@ def z01_SimplePerformanceTest(C, pks, crypto, server=PerfServer, size=1024*1024,
 
 def z02_SimpleAlgorithmicPerformanceTest(C, pks, crypto, server=PerfServer):
     """Try to compute the order-of-complexity of the algorithm being
-    used when updating a single byte. Let n be the size of the initial 
-    value stored. In the worst case, an O(n) algorithm re-updates every 
+    used when updating a single byte. Let n be the size of the initial
+    value stored. In the worst case, an O(n) algorithm re-updates every
     byte. An O(1) algorithm updates only a constant number of bytes."""
 
     import numpy as np
@@ -204,24 +214,24 @@ def z03_SharingPerformanceTest(C, pks, crypto, server=PerfServer, size=1024*1024
 
     m = alice.share("bob", "a")
     bob.receive_share("alice", "a", m)
-    
+
     server.size = 0
 
     for _ in range(10):
         offset = random.randint(0,len(data)-1)
         data = data[:offset] + chr(ord(data[offset])+1) + data[offset+1:]
         bob.upload("a", data)
-    
+
 
         offset = random.randint(0,len(data)-1)
         data = data[:offset] + chr(ord(data[offset])+1) + data[offset+1:]
         alice.upload("a", data)
-    
+
     res = server.size
 
     if alice.download("a") != data or bob.download("a") != data:
         raise RuntimeError("Did not receive correct end result.")
-    
+
     #print("Uploaded bytes:", res)
 
     if math.log(res) < 13.0:

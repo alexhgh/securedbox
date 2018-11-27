@@ -35,6 +35,34 @@ def t01_SimpleSharing(C, pks, crypto, server):
     bob.receive_share("alice", "k", m)
     return float(bob.download("k") == "v")
 
+    # def share(a, b, k):
+    #     m = a.share(b.username, k)
+    #     b.receive_share(a.username, k, m)
+    #
+    # score = 0
+    #
+    # alice = C("alice")
+    # bob = C("bob")
+    # carol = C("carol")
+    #
+    # value = "asdfas"
+    #
+    # alice.upload("k", value)
+    # share(alice, bob, "k")
+    # share(bob, carol, "k")
+    #
+    # alice.revoke("bob", "k")
+    #
+    # share(alice, bob, "k")
+    #
+    # print ("bob trying download: ")
+    # print ("bob.download(k) == value: " + bob.download("k"))
+    #
+    # share(bob, carol, "k")
+    # print ("carol trying download: ")
+    # print ("carol.download(k) == value: " + carol.download("k"))
+    #
+    # return 1
 
 def t02_SimpleTransitiveSharing(C, pks, crypto, server):
     """Checks that sharing a file can be done multiple times and is

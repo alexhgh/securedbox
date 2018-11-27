@@ -363,7 +363,7 @@ class Crypto(object):
         """Encrypt a message using El Gamal encryption scheme.
 
         :param message: The message to encrypt. The message must be numerically
-            smaller than the modulus of the prime field. 
+            smaller than the modulus of the prime field.
         :type message: str or bytes
         :param public_key: The public key to encrypt with.
         :type public_key: An ElGamal Key object
