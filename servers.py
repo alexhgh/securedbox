@@ -1,24 +1,5 @@
-"""StorageServer and PublicKeyServer implementations.
-
-.. note::
-    **Do not change any code in this file!**
-"""
-
-
 class StorageServer(object):
     """Simple implementation of a storage server using a key-value store.
-
-    Exposes the get, put, and delete functions as defined in the specification.
-
-    Remember, storage server is untrusted and can and will behave maliciously.
-    Not this implementation though, but the one which will be used for grading.
-
-    Your Client class will be initialized with a StorageServer object, through
-    which you will access these methods.
-
-    .. note::
-        **Do not modify this class!** None of your changes will be used when
-        we grade your implementation.
     """
     def __init__(self):
         self.kv = {}
@@ -63,19 +44,6 @@ class StorageServer(object):
 
 class PublicKeyServer(object):
     """Simple implementation of a public key server.
-
-    Exposes the put_public_key and get_public_key functions as defined in the
-    specification.
-
-    Remember, public key server is trusted and will operate as such during
-    grading as well.
-
-    Your Client class will be initialized with a PublicKeyServer object,
-    through which you will access these methods.
-
-    .. note::
-        **Do not modify this class!** None of your changes will be used when
-        we grade your implementation.
     """
     def __init__(self):
         self.sigkey = {}
@@ -83,14 +51,6 @@ class PublicKeyServer(object):
 
     def put_signature_key(self, username, pubkey):
         """Set the public signature key for your `username`.
-
-        .. note::
-            **Must only be called once!**
-
-        .. note::
-            Students should use
-            :meth:`base_client.BaseClient.generate_public_key_pairs` instead of
-            calling this directly.
 
         :param str username: Your client's username
         :param pubkey: Your RSA public key
@@ -101,14 +61,6 @@ class PublicKeyServer(object):
     def put_encryption_key(self, username, pubkey):
         """Set the public encryption key for your `username`.
 
-        .. note::
-            **Must only be called once!**
-
-        .. note::
-            Students should use
-            :meth:`base_client.BaseClient.generate_public_key_pairs` instead of
-            calling this directly.
-
         :param str username: Your client's username
         :param pubkey: Your ElGamal public key
         :type pubkey: An ElGamal key object
@@ -118,10 +70,6 @@ class PublicKeyServer(object):
 
     def get_signature_key(self, username):
         """Get the public signature key associated with `username`.
-
-        :param str username: The username to lookup the public key of.
-        :returns: The RSA key object containing the public key, or `None` if
-            the user does not have a key registered with the PublicKeyServer.
         """
         if username in self.sigkey:
             return self.sigkey[username]
